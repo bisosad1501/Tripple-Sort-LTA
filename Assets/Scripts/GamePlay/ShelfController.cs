@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Lofelt.NiceVibrations;
 using Unity.VisualScripting;
 
 public class ShelfController : MonoBehaviour
@@ -406,7 +407,9 @@ public class ShelfController : MonoBehaviour
         Vector3 starSpawnPos = shelfSlotList[0].warePointList[1].position + new Vector3(0, GameManager.Instance.gamePlaySetting.tileSizeY * 0.5f, 1.0f);
         AudioManager.instance.PlayComboSound();
 
-       
+        if (AudioManager.instance.hapticState == 1)
+            HapticPatterns.PlayPreset(HapticPatterns.PresetType.MediumImpact);
+
         GameManager.Instance.uiManager.gameView.UpdateStageProgress();
         //if (GameManager.Instance.uiManager.gameView.comboCount >= 2)
           //  GameManager.Instance.starRoot.SpawnStar(starSpawnPos, GameManager.Instance.uiManager.gameView.comboCount);

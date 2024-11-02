@@ -102,8 +102,29 @@ public class BuyBoostView : BaseView
     }
 
 
+    public void EarnFreeBoost()
+    {
+        if (currentType == BoostType.HINT)
+        {
+            GameController.Instance.moneyEffectController.SpawnEffect_FlyUp( new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Hint, 1, Color.white, isSpawnItemPlayer: true);
+            GameManager.Instance.AddHint(1);
+        }
+           
+        else if (currentType == BoostType.SHUFFLE)
+        {
+            GameController.Instance.moneyEffectController.SpawnEffect_FlyUp(
+                new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z),
+                GiftType.Shuffle, 1, Color.white, isSpawnItemPlayer: true);
+            GameManager.Instance.AddShuffle(1);
+        }
+        else if (currentType == BoostType.FREEZE)
+        {
+            GameController.Instance.moneyEffectController.SpawnEffect_FlyUp( new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Freeze, 1, Color.white, isSpawnItemPlayer: true);
+            GameManager.Instance.AddFreeze(1);
+        }
+            
+    }
 }
-
 
 [System.Serializable]
 public class BuyPackageView

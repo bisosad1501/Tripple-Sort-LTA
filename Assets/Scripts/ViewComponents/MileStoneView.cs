@@ -77,7 +77,6 @@ public class MileStoneView : MonoBehaviour
         {
             AudioManager.instance.btnSound.Play();
             string noti = "Unlock at level " + currentItem.levelUnlock;
-           
         }
        
 

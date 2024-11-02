@@ -106,7 +106,6 @@ public class CellStamp : MonoBehaviour
             if (currentStamp.stampState == 0)
             {
                 string noti = "Unlock at level " + currentStamp.levelUnlock;
-               
             }
             if (currentStamp.stampProgress == 8 && currentStamp.stampState == 1)
             {

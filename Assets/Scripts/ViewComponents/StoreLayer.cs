@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using Sirenix.OdinInspector;
 using UnityEngine.Advertisements;
 
-
 public class StoreLayer : SliderNode
 {
     //gift item

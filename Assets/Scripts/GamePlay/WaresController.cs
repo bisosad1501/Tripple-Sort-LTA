@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using HighlightPlus;
 using System;
 
 public class WaresController : MonoBehaviour
@@ -53,7 +53,7 @@ public class WaresController : MonoBehaviour
     private Transform modelTrans;
 
     private int oldIndex;
-  
+    private HighlightEffect highlightEffect;
 
     public enum STATE
     {
@@ -85,14 +85,14 @@ public class WaresController : MonoBehaviour
             //material = modelTrans.GetComponent<MeshRenderer>().materials;
             SpriteRenderer = modelTrans.GetComponent<SpriteRenderer>();
             //modelTrans.gameObject.AddComponent<HighlightEffect>();
-          
+            highlightEffect = modelTrans.GetComponent<HighlightEffect>();
         }
         else
         {
             //material = GetComponent<MeshRenderer>().materials;
             SpriteRenderer = modelTrans.GetComponent<SpriteRenderer>();
             //gameObject.AddComponent<HighlightEffect>();
-         
+            highlightEffect = GetComponent<HighlightEffect>();
         }
 
         //highlightEffect.outlineColor = Color.white;
@@ -126,7 +126,20 @@ public class WaresController : MonoBehaviour
         //clear old slot
         //highlightEffect.enabled = true;
         //highlightEffect.highlighted = true;
-       
+        if (highlightEffect == null)
+        {
+            highlightEffect = modelTrans.GetComponent<HighlightEffect>();
+            if (highlightEffect == null)
+            {
+                modelTrans.gameObject.AddComponent<HighlightEffect>();
+                highlightEffect = modelTrans.GetComponent<HighlightEffect>();
+            }
+            highlightEffect.enabled = true;
+            highlightEffect.highlighted = true;
+            
+            Debug.Log("HightLightNull");
+        }
+        Debug.Log("Set HigtLight " + highlightEffect.highlighted + "Enabled"+ highlightEffect.enabled);
         oldIndex = shelfController.shelfSlotList[0].waresInRowSlot.IndexOf(this);
         shelfController.shelfSlotList[0].waresInRowSlot[oldIndex] = null;
     }
@@ -136,7 +149,7 @@ public class WaresController : MonoBehaviour
         DoItemShake();
         //clear old slot
         //highlightEffect.highlighted = false;
-       
+        Debug.Log("Off HightLight" + highlightEffect.highlighted);
         shelfController.shelfSlotList[0].waresInRowSlot[oldIndex] = this;
     }
 
@@ -145,7 +158,7 @@ public class WaresController : MonoBehaviour
         //transform.localPosition = FindPosInShelf();
         transform.DOLocalMove(FindPosInShelf(), 0.2f).SetEase(Ease.Linear).SetDelay(0.0f).OnComplete(() =>
         {
-          
+            highlightEffect.highlighted = false;
             currentState = STATE.IDLE;
         });
 
@@ -173,7 +186,7 @@ public class WaresController : MonoBehaviour
             DoItemShake();
         }
         );
-       
+        highlightEffect.highlighted = false;
     }
 
     public void RemoveItem(Action act = null)
