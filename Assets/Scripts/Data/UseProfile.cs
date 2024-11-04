@@ -567,6 +567,7 @@ public class UseProfile : MonoBehaviour
         set
         {
             PlayerPrefs.SetInt(StringHelper.Star, value);
+            GameController.Instance.playFabManager.SendLeaderBoardScore(value);
             PlayerPrefs.Save();
         }
     }

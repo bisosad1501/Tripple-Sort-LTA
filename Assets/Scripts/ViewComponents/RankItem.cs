@@ -29,7 +29,7 @@ public class RankItem : MonoBehaviour
 
     public void ShowView(RankDataModel rankDataModel)
     {
-        if (rankDataModel.rankID > GameManager.Instance.gamePlaySetting.rankingSize)
+        if ( rankDataModel.rankID > GameManager.Instance.gamePlaySetting.rankingSize)
             rankDataModel.rankID -= GameManager.Instance.gamePlaySetting.rankingSize;
 
         rankTxt.text = rankDataModel.rankID.ToString();

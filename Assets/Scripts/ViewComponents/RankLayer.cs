@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class RankLayer : SliderNode
 {
-    public RankData rankingData;
+    public List<RankDataModel> rankingDataList = new List<RankDataModel>();
 
     public CanvasGroup allTab;
 
@@ -31,7 +32,6 @@ public class RankLayer : SliderNode
 
     public override void InitView()
     {
-        myRankingTxt.text = "100+";
         myUserNameTxt.text = "Your Ranking";
         myScoreTxt.text = GameManager.Instance.currentStar.ToString();
     }
@@ -40,7 +40,7 @@ public class RankLayer : SliderNode
     void Start()
     {
         loaded = false;
-        LoadView();
+        StartCoroutine(LoadingView());
         ChooseAllTab();
     }
 
@@ -50,23 +50,34 @@ public class RankLayer : SliderNode
         
     }
 
+    IEnumerator LoadingView()
+    {
+        GameController.Instance.playFabManager.GetLeaderBoardScores();
+        yield return new WaitUntil(()=>GameController.Instance.playFabManager.isLoadLeaderBoardDone);
+        rankingDataList = GameController.Instance.playFabManager.leaderboardScores;
+        LoadView();
+    }
+
+    private bool isPlayerin100;
     private void LoadView()
     {
-        for(int i = 0; i < GameManager.Instance.gamePlaySetting.rankingSize; i++)
+        int rankingCount = rankingDataList.Count;
+        if(rankingCount > GameManager.Instance.gamePlaySetting.rankingSize) rankingCount = GameManager.Instance.gamePlaySetting.rankingSize;
+        for(int i = 0; i < rankingCount; i++)
         {
             RankItem item = Instantiate(rankItemPrefab);
-            item.ShowView(rankingData.rankDataList[i]);
+            item.ShowView(rankingDataList[i]);
             item.transform.SetParent(allTabRoot);
             item.transform.localScale = Vector3.one;
-        }
+            if (rankingDataList[i].userName.CompareTo(UseProfile.NamePlayer) == 0)
+            {
+                myRankingTxt.text = rankingDataList[i].rankID.ToString();    
+                isPlayerin100 = true;
+            }
 
-        for (int i = 0; i < GameManager.Instance.gamePlaySetting.rankingSize; i++)
-        {
-            RankItem item = Instantiate(rankItemPrefab);
-            item.ShowView(rankingData.rankDataList[i + GameManager.Instance.gamePlaySetting.rankingSize]);
-            item.transform.SetParent(monthlyTabRoot);
-            item.transform.localScale = Vector3.one;
+            if (!isPlayerin100) myRankingTxt.text = "100+";
         }
+        
     }
 
     public void ChooseAllTab()
