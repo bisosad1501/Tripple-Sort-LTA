@@ -401,9 +401,9 @@ public class ShelfController : MonoBehaviour
         yield return new WaitForSeconds(0.31f);
         PushRow();
         GameManager.Instance.comboVfx.transform.position = shelfSlotList[0].warePointList[1].position + new Vector3(0, GameManager.Instance.gamePlaySetting.tileSizeY * 0.5f, 3.0f);
-        //GameManager.Instance.comboVfx.Play();
+        GameManager.Instance.comboVfx.Play();
         GameManager.Instance.clearVfx.transform.localPosition = shelfSlotList[0].warePointList[1].position + new Vector3(0, GameManager.Instance.gamePlaySetting.tileSizeY * 1.0f, 3.0f);
-        //GameManager.Instance.clearVfx.PlayAnim();
+        GameManager.Instance.clearVfx.PlayAnim();
         Vector3 starSpawnPos = shelfSlotList[0].warePointList[1].position + new Vector3(0, GameManager.Instance.gamePlaySetting.tileSizeY * 0.5f, 1.0f);
         AudioManager.instance.PlayComboSound();
 
@@ -411,8 +411,8 @@ public class ShelfController : MonoBehaviour
             HapticPatterns.PlayPreset(HapticPatterns.PresetType.MediumImpact);
 
         GameManager.Instance.uiManager.gameView.UpdateStageProgress();
-        //if (GameManager.Instance.uiManager.gameView.comboCount >= 2)
-          //  GameManager.Instance.starRoot.SpawnStar(starSpawnPos, GameManager.Instance.uiManager.gameView.comboCount);
+        if (GameManager.Instance.uiManager.gameView.comboCount >= 2)
+           GameManager.Instance.starRoot.SpawnStar(starSpawnPos, GameManager.Instance.uiManager.gameView.comboCount);
     }
 
     private void PushRow()
