@@ -40,7 +40,6 @@ public class LoginView : BaseView
     {
         Debug.Log("Login");
         GameController.Instance.playFabManager.ChangeName(userName);
-        GameManager.Instance.uiManager.homeView.namePlayer.text = userName;
         HideViewHome();
     }
 }

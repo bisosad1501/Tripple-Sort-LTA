@@ -22,6 +22,7 @@ public class GameManager : SingletonGame<GameManager>
 
     public LivesManager livesManager;
     
+    
 
     [HideInInspector]
     public int collectedStar;

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class RankLayer : SliderNode
 {
     public List<RankDataModel> rankingDataList = new List<RankDataModel>();
+    public List<RankItem> rankItemList = new List<RankItem>();
 
     public CanvasGroup allTab;
 
@@ -34,6 +35,7 @@ public class RankLayer : SliderNode
     {
         myUserNameTxt.text = "Your Ranking";
         myScoreTxt.text = GameManager.Instance.currentStar.ToString();
+        StartCoroutine(LoadingView());
     }
 
     // Start is called before the first frame update
@@ -54,6 +56,7 @@ public class RankLayer : SliderNode
     {
         GameController.Instance.playFabManager.GetLeaderBoardScores();
         yield return new WaitUntil(()=>GameController.Instance.playFabManager.isLoadLeaderBoardDone);
+        rankingDataList = new List<RankDataModel>();
         rankingDataList = GameController.Instance.playFabManager.leaderboardScores;
         LoadView();
     }
@@ -61,11 +64,17 @@ public class RankLayer : SliderNode
     private bool isPlayerin100;
     private void LoadView()
     {
+        for (int i = 0; i < rankItemList.Count; i++)
+        {
+            Destroy(rankItemList[i].gameObject);
+        }
+        rankItemList.Clear();
         int rankingCount = rankingDataList.Count;
         if(rankingCount > GameManager.Instance.gamePlaySetting.rankingSize) rankingCount = GameManager.Instance.gamePlaySetting.rankingSize;
         for(int i = 0; i < rankingCount; i++)
         {
             RankItem item = Instantiate(rankItemPrefab);
+            rankItemList.Add(item);
             item.ShowView(rankingDataList[i]);
             item.transform.SetParent(allTabRoot);
             item.transform.localScale = Vector3.one;

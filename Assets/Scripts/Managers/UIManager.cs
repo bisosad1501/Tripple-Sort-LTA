@@ -46,6 +46,8 @@ public class UIManager: MonoBehaviour
 
     public HomeLayer HomeLayer;
     public LoginView loginView;
+
+    public RankLayer rankLayer;
     // Start is called before the first frame update
     void Start()
     {

@@ -43,6 +43,10 @@ public class PlayFabManager : MonoBehaviour
    public void OnError(PlayFabError error)
    {
        Debug.LogError(error.GenerateErrorReport());
+       GameController.Instance.moneyEffectController.SpawnEffectText_FlyUp(Input.mousePosition, error.ErrorMessage, Color.white);
+       GameController.Instance.moneyEffectController.SpawnEffectText_FlyUp(Input.mousePosition, error.ErrorMessage, Color.white);
+       GameController.Instance.moneyEffectController.SpawnEffectText_FlyUp(Input.mousePosition, error.ErrorMessage, Color.white);
+       GameController.Instance.moneyEffectController.SpawnEffectText_FlyUp(Input.mousePosition, error.ErrorMessage, Color.white);
    }
 
    public void ChangeName(String newName)
@@ -57,6 +61,7 @@ public class PlayFabManager : MonoBehaviour
    public void OnDisplaynameUpdated(UpdateUserTitleDisplayNameResult result)
    {
        UseProfile.NamePlayer = result.DisplayName;
+       GameManager.Instance.uiManager.homeView.InitView();
        Debug.Log("Display name updated " + UseProfile.NamePlayer);
    }
 

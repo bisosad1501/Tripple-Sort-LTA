@@ -59,6 +59,7 @@ public class SliderView : MonoBehaviour
             return;
 
         Debug.Log("Show Node " + index);
+        if(index == 1) GameManager.Instance.uiManager.rankLayer.InitView();
         AudioManager.instance.btnSound.Play();
         float distanceTranslate = (currentNodeIndex - index) * witdhScreenSize;
 
