@@ -2,7 +2,33 @@
 using System;
 
 public class UseProfile : MonoBehaviour
+
 {
+    public static string NamePlayer
+    {
+        get
+        {
+            return PlayerPrefs.GetString("FB_NAME_v2", deviceId);
+        }
+        set
+        {
+            PlayerPrefs.SetString("FB_NAME_v2", value);
+            PlayerPrefs.Save();
+        }
+    }
+    public static string PlayFabId
+    {
+        get
+        {
+            return PlayerPrefs.GetString("PlayFabId", string.Empty);
+        }
+        set
+        {
+
+            PlayerPrefs.SetString("PlayFabId", value);
+            PlayerPrefs.Save();
+        }
+    }
     public static string Country_Code
     {
         get

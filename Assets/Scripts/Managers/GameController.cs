@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     public DataContain dataContain;
     public float progressLoading;
     public bool isShowOpen;
+    public PlayFabManager playFabManager;
     [HideInInspector] public SceneType currentScene;
 
     protected void Awake()
@@ -41,6 +42,7 @@ public class GameController : MonoBehaviour
     public void Init()
     {
         useProfile.CurrentLevelPlay = UseProfile.CurrentLevel;
+        playFabManager.Init();
         //useProfile.IsRemoveAds = true;
         LoadSceneDone("Level");
     }

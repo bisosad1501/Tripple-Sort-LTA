@@ -45,6 +45,7 @@ public class UIManager: MonoBehaviour
     public UnlockStampView unlockStampView;
 
     public HomeLayer HomeLayer;
+    public LoginView loginView;
     // Start is called before the first frame update
     void Start()
     {

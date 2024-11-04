@@ -15,6 +15,8 @@ public class HomeView : BaseView
 
     public Text heartFullTxt;
 
+    public Text namePlayer;
+
     public GameObject addHeart;
 
     public override void InitView()
@@ -24,7 +26,7 @@ public class HomeView : BaseView
         UpdateCoinTxt();
         UpdateStarTxt();
         heartTxt.text = GameManager.Instance.livesManager.lives.ToString();
-
+        namePlayer.text = UseProfile.NamePlayer;
         
         if (GameManager.Instance.livesManager.lives >= 5)
         {
@@ -174,5 +176,9 @@ public class HomeView : BaseView
         sliderView.ShowNodeByIndex(0);
     }
 
-  
+    public void ShowLogin()
+    {
+        AudioManager.instance.btnSound.Play();
+        GameManager.Instance.uiManager.loginView.ShowView();
+    }
 }
