@@ -10,15 +10,7 @@ public class SettingView : BaseView
 
     public GameObject vibrationOn, vibrationOff;
 
-    public string androidGameUrl;
-
-    public string iosGameUrl;
-
-    public string termUrl;
-
-    public string privacyUrl;
-
-    public string contactUrl;
+   
 
     public override void InitView()
     {
@@ -137,41 +129,9 @@ public class SettingView : BaseView
             }
     }
 
-    public void ContactUs()
-    {
-        AudioManager.instance.btnSound.Play();
-        Application.OpenURL(contactUrl);
-    }
+    
 
-    public void Rate()
-    {
-        AudioManager.instance.btnSound.Play();
-#if UNITY_IOS
-        Application.OpenURL(iosGameUrl);
-#elif UNITY_ANDROID
-        Application.OpenURL(androidGameUrl);
-#endif
-        
-    }
-
-    public void Term()
-    {
-        AudioManager.instance.btnSound.Play();
-        Application.OpenURL(termUrl);
-    }
-
-    public void Policy()
-    {
-        AudioManager.instance.btnSound.Play();
-        Application.OpenURL(privacyUrl);
-    }
-
-
-    public void Restore()
-    {
-        AudioManager.instance.btnSound.Play();
-       // Debug.Log("Restore");
-    }
+   
 
     public void QuitGame()
     {

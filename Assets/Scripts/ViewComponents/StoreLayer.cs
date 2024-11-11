@@ -29,19 +29,15 @@ public class StoreLayer : SliderNode
 
     public RectTransform lifePackageViewRoot;
 
-    public Text freeAdsValueTxt;
 
-    public Text freeAdsTimerTxt;
-    
-    public Text noAdsPrice;
 
-    [SerializeField] private Button freeAdCoin; 
-    [SerializeField] private Button freeAdLive; 
+    [SerializeField] private Button freeAdCoin;
+    [SerializeField] private Button freeAdLive;
     protected Action<object> actionIAPInited;
 
     public override void InitView()
     {
-       
+
     }
 
     private void LoadItem()
@@ -87,16 +83,23 @@ public class StoreLayer : SliderNode
     {
         AudioManager.instance.btnSound.Play();
         freeAdCoin.interactable = false;
-        
-                //GameManager.Instance.freeAdsTimer.ConsumeLife();
-                GameController.Instance.moneyEffectController.SpawnEffect_FlyUp( new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Coin, 10, Color.white, isSpawnItemPlayer: true);
-                GameController.Instance.moneyEffectController.SpawnEffect_FlyUp( new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Coin, 10, Color.white, isSpawnItemPlayer: true);
-                GameController.Instance.moneyEffectController.SpawnEffect_FlyUp( new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Coin, 10, Color.white, isSpawnItemPlayer: true);
-                GameManager.Instance.AddCoin(10);
-                freeAdCoin.interactable = true;
-           
-        
+
+        //GameManager.Instance.freeAdsTimer.ConsumeLife();
+        GameController.Instance.moneyEffectController.SpawnEffect_FlyUp(
+            new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Coin,
+            10, Color.white, isSpawnItemPlayer: true);
+        GameController.Instance.moneyEffectController.SpawnEffect_FlyUp(
+            new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Coin,
+            10, Color.white, isSpawnItemPlayer: true);
+        GameController.Instance.moneyEffectController.SpawnEffect_FlyUp(
+            new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Coin,
+            10, Color.white, isSpawnItemPlayer: true);
+        GameManager.Instance.AddCoin(10);
+        freeAdCoin.interactable = true;
+
+
     }
+
     public void FreeLive()
     {
         AudioManager.instance.btnSound.Play();
@@ -113,13 +116,19 @@ public class StoreLayer : SliderNode
             freeAdLive.interactable = true;
             return;
         }
-        
-                //GameManager.Instance.freeAdsTimer.ConsumeLife();
-                GameController.Instance.moneyEffectController.SpawnEffect_FlyUp( new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Heart, 1, Color.white, isSpawnItemPlayer: true);
-                GameController.Instance.moneyEffectController.SpawnEffect_FlyUp( new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Heart, 1, Color.white, isSpawnItemPlayer: true);
-                GameController.Instance.moneyEffectController.SpawnEffect_FlyUp( new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Heart, 1, Color.white, isSpawnItemPlayer: true);
-                GameManager.Instance.livesManager.GiveOneLife();
-                freeAdLive.interactable = true;
+
+        //GameManager.Instance.freeAdsTimer.ConsumeLife();
+        GameController.Instance.moneyEffectController.SpawnEffect_FlyUp(
+            new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Heart,
+            1, Color.white, isSpawnItemPlayer: true);
+        GameController.Instance.moneyEffectController.SpawnEffect_FlyUp(
+            new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Heart,
+            1, Color.white, isSpawnItemPlayer: true);
+        GameController.Instance.moneyEffectController.SpawnEffect_FlyUp(
+            new Vector3(Input.mousePosition.x / 2f, Input.mousePosition.y / 2f, Input.mousePosition.z), GiftType.Heart,
+            1, Color.white, isSpawnItemPlayer: true);
+        GameManager.Instance.livesManager.GiveOneLife();
+        freeAdLive.interactable = true;
     }
 
     public void Restore()
@@ -138,28 +147,6 @@ public class StoreLayer : SliderNode
         GameManager.Instance.uiManager.storeView.UpdateFreeAdsTimerTxt();
     }
 
-    /*public IAPDatabase _iapDatabase;
-    [Button]
-    public void AddToIAPDatabase()
-    {
-        foreach (var i in coinPackageList)
-        {
-            IAPPack pack = new IAPPack();
-            string name = "coin_" + i.packageValue;
-            pack.defaultPrice = i.packagePrice;
-            pack.itemsResult = new Dictionary<GiftType, int>();
-            pack.itemsResult.Add(GiftType.Coin, int.Parse(i.packageValue));
-            pack.productType = ProductType.Consumable;
-            pack.shortID = name;
-            pack.tittle = name;
-            pack.type = i.iapPackage;
-            pack.namePack = name;
-            pack.typeBuy = TypeBuy.Inapp;
-            
-            _iapDatabase.lstPacksInapp.Add(pack);
-        }
-    }*/
-  
 }
 
 [System.Serializable]

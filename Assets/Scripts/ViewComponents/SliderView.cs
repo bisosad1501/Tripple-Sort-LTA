@@ -113,38 +113,4 @@ public class SliderView : MonoBehaviour
               });
 
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    /*
-    public void SetLeft(this RectTransform rt, float left)
-    {
-        rt.offsetMin = new Vector2(left, rt.offsetMin.y);
-    }
-
-    public void SetRight(this RectTransform rt, float right)
-    {
-        rt.offsetMax = new Vector2(-right, rt.offsetMax.y);
-    }
-
-    public void SetTop(this RectTransform rt, float top)
-    {
-        rt.offsetMax = new Vector2(rt.offsetMax.x, -top);
-    }
-
-    public void SetBottom(this RectTransform rt, float bottom)
-    {
-        rt.offsetMin = new Vector2(rt.offsetMin.x, bottom);
-    }
-    */
 }
