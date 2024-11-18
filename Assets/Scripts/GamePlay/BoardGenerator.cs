@@ -696,19 +696,7 @@ public class BoardGenerator : MonoBehaviour
                     break;
             }
         }
-
-        /*
-        if(3 * shelfCount > productPairCount)
-        {
-            positivePair = 3 * shelfCount - productPairCount;
-            shelfDeepMax = 3;
-        }
-        else
-        {
-            positivePair = 4 * shelfCount - productPairCount;
-            shelfDeepMax = 4;
-        }
-        */
+        
 
         positivePair = shelfDeepMax * shelfCount - productPairCount;
 
@@ -726,7 +714,7 @@ public class BoardGenerator : MonoBehaviour
             {
                 pPool.productID = productIDList[i];
 
-                for (int j = 0; j < 3 * productPairCountList[i]; j++)
+                for (int j = 0; j < 4 * productPairCountList[i]; j++)
                 {
                     pPool.productList.Add(pPool.productID);
                 }
@@ -736,7 +724,7 @@ public class BoardGenerator : MonoBehaviour
             {
                 pPool.productID = -1;
 
-                for (int j = 0; j < 3 * positivePair; j++)
+                for (int j = 0; j < 4 * positivePair; j++)
                 {
                     pPool.productList.Add(pPool.productID);
                 }
@@ -768,65 +756,13 @@ public class BoardGenerator : MonoBehaviour
             tile.tileList.Add(0);
             tile.tileList.Add(0);
             tile.tileList.Add(0);
+            tile.tileList.Add(0);
             originalTileList.Add(tile);
         }
 
         Debug.Log("Empty slot in first round : " + currentLv.roundsEmptyPlaceCount);
 
-        //for first level -->tutorial
-
-        if (currentLv.ID == 1)
-        {
-
-            productPoolList[productPoolList.Count - 1].productList.RemoveAt(0);
-            originalTileList[0].tileList[1] = -1;
-
-            productPoolList[productPoolList.Count - 1].productList.RemoveAt(0);
-            originalTileList[1].tileList[2] = -1;
-
-            productPoolList[productPoolList.Count - 1].productList.RemoveAt(0);
-            originalTileList[2].tileList[2] = -1;
-
-            for (int i = shelfCount; i < shelfDeepMax * shelfCount; i++)
-            {
-                if (!productPoolList[productPoolList.Count - 1].isEmpty)
-                {
-                    productPoolList[productPoolList.Count - 1].productList.RemoveAt(0);
-                    originalTileList[i].tileList[0] = -1;
-                    originalTileList[i].tileList[1] = -1;
-                    originalTileList[i].tileList[2] = -1;
-                }
-
-            }
-            productPoolList.RemoveAt(productPoolList.Count - 1);
-
-            Debug.Log("POOL SIZE " + productPoolList.Count);
-
-            originalTileList[0].tileList[0] = productPoolList[1].productList[0];
-            productPoolList[1].productList.RemoveAt(0);
-
-            originalTileList[0].tileList[2] = productPoolList[0].productList[0];
-            productPoolList[0].productList.RemoveAt(0);
-
-
-            originalTileList[2].tileList[0] = productPoolList[1].productList[0];
-            productPoolList[1].productList.RemoveAt(0);
-
-            originalTileList[2].tileList[1] = productPoolList[1].productList[0];
-            productPoolList[1].productList.RemoveAt(0);
-
-
-            originalTileList[1].tileList[0] = productPoolList[0].productList[0];
-            productPoolList[0].productList.RemoveAt(0);
-
-            originalTileList[1].tileList[1] = productPoolList[0].productList[0];
-            productPoolList[0].productList.RemoveAt(0);
-
-
-            return;
-        }
-
-        //Init first Column - 1
+        
         for (int i = 0; i < shelfCount; i++)
         {
             if (i < currentLv.roundsEmptyPlaceCount)
@@ -881,6 +817,22 @@ public class BoardGenerator : MonoBehaviour
                 }
             }
         }
+        if (shelfDeepMax > 3 && productPoolList[productPoolList.Count - 1].productList.Count > 0)
+        {
+            if (productPoolList[productPoolList.Count - 1].productList.Count > 0)
+            {
+                for (int i = shelfCount; i < shelfDeepMax * shelfCount; i++)
+                {
+                    if (!productPoolList[productPoolList.Count - 1].isEmpty)
+                    {
+                        productPoolList[productPoolList.Count - 1].productList.RemoveAt(0);
+                        originalTileList[i].tileList[3] = -1;
+                    }
+
+
+                }
+            }
+        }
         Debug.Log("POOL " + productPoolList[productPoolList.Count - 1].productList.Count);
 
         productPoolList.RemoveAt(productPoolList.Count - 1);
@@ -923,7 +875,7 @@ public class BoardGenerator : MonoBehaviour
         for (int i = 0; i < shelfDeepMax * shelfCount; i++)
         {
 
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 4; j++)
             {
                 if (originalTileList[i].tileList[j] != -1)
                 {
@@ -1094,7 +1046,7 @@ public class BoardGenerator : MonoBehaviour
             for (int j = 0; j < shelfDeepMax; j++)
             {
                 ShelfTile tile = new ShelfTile();
-                for (int k = 0; k < 3; k++)
+                for (int k = 0; k < 4; k++)
                 {
 
                     tile.tileList.Add(originalTileList[j * shelfCount + i].tileList[k]);

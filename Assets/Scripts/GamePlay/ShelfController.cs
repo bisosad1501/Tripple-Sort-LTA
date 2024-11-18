@@ -139,7 +139,7 @@ public class ShelfController : MonoBehaviour
 
         for (int i = 0; i < shelfSlotList.Count; i++)
         {
-            if (shelfSlotList[i].waresInRowSlot[0] == null && shelfSlotList[i].waresInRowSlot[1] == null && shelfSlotList[i].waresInRowSlot[2] == null)
+            if (shelfSlotList[i].waresInRowSlot[0] == null && shelfSlotList[i].waresInRowSlot[1] == null && shelfSlotList[i].waresInRowSlot[2] == null && shelfSlotList[i].waresInRowSlot[3] == null)
             {
                 //shelfSlotList.RemoveAt(i);
                 //Debug.Log("EMPTY ROW");
@@ -329,11 +329,11 @@ public class ShelfController : MonoBehaviour
         if (type == ShelfType.TRIPLE)
         {
             Debug.Log("Checking");
-            if (shelfSlotList[0].waresInRowSlot[0] == null && shelfSlotList[0].waresInRowSlot[1] == null && shelfSlotList[0].waresInRowSlot[2] == null)
+            if (shelfSlotList[0].waresInRowSlot[0] == null && shelfSlotList[0].waresInRowSlot[1] == null && shelfSlotList[0].waresInRowSlot[2] == null && shelfSlotList[0].waresInRowSlot[3] == null)
                 PushRow();
 
             if (shelfSlotList[0].waresInRowSlot[0] == null || shelfSlotList[0].waresInRowSlot[1] == null ||
-                shelfSlotList[0].waresInRowSlot[2] == null)
+                shelfSlotList[0].waresInRowSlot[2] == null || shelfSlotList[0].waresInRowSlot[3] == null)
             {
                 foreach (var i in shelfSlotList[0].waresInRowSlot)
                 {
@@ -349,7 +349,7 @@ public class ShelfController : MonoBehaviour
             }
 
             if ((shelfSlotList[0].waresInRowSlot[0].waresID == shelfSlotList[0].waresInRowSlot[1].waresID) &&
-                (shelfSlotList[0].waresInRowSlot[1].waresID == shelfSlotList[0].waresInRowSlot[2].waresID))
+                (shelfSlotList[0].waresInRowSlot[1].waresID == shelfSlotList[0].waresInRowSlot[2].waresID) && (shelfSlotList[0].waresInRowSlot[3].waresID == shelfSlotList[0].waresInRowSlot[2].waresID))
                 StartCoroutine(ClearFirstRow());
             else
             {
@@ -378,6 +378,7 @@ public class ShelfController : MonoBehaviour
         shelfSlotList[0].waresInRowSlot[0].currentState = WaresController.STATE.PROCESS;
         shelfSlotList[0].waresInRowSlot[1].currentState = WaresController.STATE.PROCESS;
         shelfSlotList[0].waresInRowSlot[2].currentState = WaresController.STATE.PROCESS;
+        shelfSlotList[0].waresInRowSlot[3].currentState = WaresController.STATE.PROCESS;
         yield return new WaitForSeconds(0.1f);
 
         shelfSlotList[0].waresInRowSlot[0].transform.DOLocalMoveX(GameManager.Instance.gamePlaySetting.tileSizeX, 0.15f).SetRelative().SetEase(Ease.Linear).SetDelay(0.25f).OnComplete(() =>
@@ -385,7 +386,11 @@ public class ShelfController : MonoBehaviour
             shelfSlotList[0].waresInRowSlot[0].RemoveItem();
 
         });
+        shelfSlotList[0].waresInRowSlot[3].transform.DOLocalMoveX(GameManager.Instance.gamePlaySetting.tileSizeX, 0.15f).SetRelative().SetEase(Ease.Linear).SetDelay(0.25f).OnComplete(() =>
+        {
+            shelfSlotList[0].waresInRowSlot[3].RemoveItem();
 
+        });
         shelfSlotList[0].waresInRowSlot[2].transform.DOLocalMoveX(-GameManager.Instance.gamePlaySetting.tileSizeX, 0.15f).SetRelative().SetEase(Ease.Linear).SetDelay(0.25f).OnComplete(() =>
         {
             shelfSlotList[0].waresInRowSlot[2].RemoveItem();
