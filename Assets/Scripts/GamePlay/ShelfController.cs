@@ -390,6 +390,15 @@ public class ShelfController : MonoBehaviour
         {
             shelfSlotList[0].waresInRowSlot[2].RemoveItem();
             shelfSlotList[0].waresInRowSlot[1].RemoveItem();
+            shelfSlotList[0].waresInRowSlot[2].RemoveItem();
+            shelfSlotList[0].waresInRowSlot[1].RemoveItem();
+            for (int i = 0; i < shelfSlotList.Count; i++)
+            {
+                for (int j = 0; j < shelfSlotList[i].waresInRowSlot.Count; j++)
+                {
+                    if(shelfSlotList[i].waresInRowSlot[j] != null)shelfSlotList[i].waresInRowSlot[j].RemoveItem();
+                }
+            }
             StartCoroutine(AfterDestroy());
         });
 
