@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e205dc7daba448cb824b89f0778134, type: 3}
   m_Name: GamePlaySetting
   m_EditorClassIdentifier: 
-  colSizeMax: 3
+  colSizeMax: 4
   deptSizeMax: 3
   tileSizeX: 1.5
   tileSizeY: 2.25
