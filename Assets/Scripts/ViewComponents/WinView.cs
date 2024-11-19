@@ -238,7 +238,8 @@ public class WinView : BaseView
 
     public void NextLevel()
     {
-        AudioManager.instance.btnSound.Play();
+        GameController.Instance.playFabManager.SendPlayTimeToPlayFab();
+        //AudioManager.instance.btnSound.Play();
         GameManager.Instance.SaveStar();
         moveArrowTween.Pause();
 

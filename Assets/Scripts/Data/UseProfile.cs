@@ -4,6 +4,14 @@ using System;
 public class UseProfile : MonoBehaviour
 
 {
+    #region ID
+    public static string deviceId
+    {
+        get => SystemInfo.deviceUniqueIdentifier;
+    }
+    #endregion
+    
+    
     public static string NamePlayer
     {
         get
@@ -18,12 +26,7 @@ public class UseProfile : MonoBehaviour
     }
    
    
-    #region ID
-    public static string deviceId
-    {
-        get => SystemInfo.deviceUniqueIdentifier;
-    }
-    #endregion
+    
    
 
    

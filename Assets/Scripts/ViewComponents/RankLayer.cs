@@ -49,6 +49,7 @@ public class RankLayer : SliderNode
     private bool isPlayerin100;
     private void LoadView()
     {
+       
         // Xóa các item trước đó
         for (int i = 0; i < rankItemList.Count; i++)
         {

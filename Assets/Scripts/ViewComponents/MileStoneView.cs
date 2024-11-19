@@ -23,7 +23,6 @@ public class MileStoneView : MonoBehaviour
     public GameObject gotObj;
 
 
-
     public void ShowView(MileStoneItem item)
     {
         currentItem = item;

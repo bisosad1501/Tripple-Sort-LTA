@@ -12,7 +12,8 @@ public class RankItem : MonoBehaviour
     public Text userNameTxt;
 
     public Text scoreTxt;
-
+    
+    public Text timeTxt;
     public Sprite[] medalSpr;
 
     // Start is called before the first frame update
@@ -20,13 +21,13 @@ public class RankItem : MonoBehaviour
 
     public void ShowView(RankDataModel rankDataModel)
     {
-        if ( rankDataModel.rankID > GameManager.Instance.gamePlaySetting.rankingSize)
-            rankDataModel.rankID -= GameManager.Instance.gamePlaySetting.rankingSize;
+        Debug.Log("rankID + " + rankDataModel.rankID);
+ 
 
         rankTxt.text = rankDataModel.rankID.ToString();
         userNameTxt.text = rankDataModel.userName.ToString();
         scoreTxt.text = rankDataModel.score.ToString();
-
+        timeTxt.text = rankDataModel.Time;
         if (rankDataModel.rankID == 1)
             rankMedal.sprite = medalSpr[0];
         else if (rankDataModel.rankID == 2)

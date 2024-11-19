@@ -25,6 +25,7 @@ public class GameView : BaseView
     public int timerMax;
     
     public float currentTime;
+    public float timePlay;
 
     public Text stageProgressTxt;
 
@@ -108,6 +109,7 @@ public class GameView : BaseView
             timerMax = 200;
 
         currentTime = timerMax;
+        timePlay = 0f;
         timerTxt.gameObject.SetActive(true);
 
         collectedStarTxt.text = GameManager.Instance.inGameStar.ToString();
@@ -327,17 +329,19 @@ public class GameView : BaseView
 
         if (GameManager.Instance.currentState == GameManager.GAME_STATE.LEVEL_CLEAR)
             return;
-
+        
         if (currentTime - Time.deltaTime > 0.0f)
         {
             currentTime -= Time.deltaTime;
             timerTxt.text = TimeSpan.FromSeconds(currentTime).ToString(@"mm\:ss");
+            timePlay += Time.deltaTime;
         }
         else
         {
             Debug.Log("Time OUT");
             timerTxt.gameObject.SetActive(false);
             GameManager.Instance.currentState = GameManager.GAME_STATE.TIME_OUT;
+            timePlay = 0f;
             GameManager.Instance.ShowGameFail();
         }
     }

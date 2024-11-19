@@ -88,7 +88,7 @@ public class GameManager : SingletonGame<GameManager>
         currentState = GAME_STATE.IN_HOME;
         uiManager.homeView.InitView();
         uiManager.homeView.ShowView();
-        uiManager.storeView.InitView();
+        //uiManager.storeView.InitView();
     }
 
     // Update is called once per frame
@@ -282,7 +282,7 @@ public class GameManager : SingletonGame<GameManager>
         currentStar += inGameStar;
         UseProfile.Star = currentStar;
         uiManager.homeView.UpdateStarTxt();
-        uiManager.storeView.UpdateStarTxt();
+        //uiManager.storeView.UpdateStarTxt();
     }
 
     public void AddHint(int moreHint)
