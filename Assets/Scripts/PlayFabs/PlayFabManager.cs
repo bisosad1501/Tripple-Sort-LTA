@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -145,11 +146,11 @@ public class PlayFabManager : MonoBehaviour
             };
             leaderboardScores.Add(rankData);
         }
-        isLoadLeaderBoardDone = true;
     }
 
     public void OnLeaderBoardTimeGet(GetLeaderboardResult result)
     {
+        
         for (int i = 0; i < result.Leaderboard.Count; i++)
         {
             if (i < leaderboardScores.Count)
@@ -162,11 +163,24 @@ public class PlayFabManager : MonoBehaviour
                         k.userName == result.Leaderboard[i].PlayFabId)
                     {
                         k.Time = rankUpdateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                        k.EndTime = secondsSinceEpoch;
+                        break;
                     }
+                }
+
+                leaderboardScores = leaderboardScores
+                    .OrderByDescending(rank => rank.score)
+                    .ThenBy(rank => rank.EndTime) // Assuming EndTime is in seconds
+                    .ToList();
+                for (int j = 0; j < leaderboardScores.Count; j++)
+                {
+                    leaderboardScores[j].rankID = j + 1;
                 }
                 Debug.Log("Rank " + leaderboardScores[i].rankID + " was last updated at: " + leaderboardScores[i].Time);
             }
         }
+
+        isLoadLeaderBoardDone = true;
     }
 }
 
