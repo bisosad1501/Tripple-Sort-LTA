@@ -7,6 +7,8 @@ using PlayFab.ClientModels;
 public class PlayFabManager : MonoBehaviour
 {
     public ErrorView errorView; 
+    public List<RankDataModel> leaderboardScores = new List<RankDataModel>();
+    public bool isLoadLeaderBoardDone; 
 
     public void Init()
     {
@@ -34,7 +36,7 @@ public class PlayFabManager : MonoBehaviour
         {
             UseProfile.NamePlayer = result.InfoResultPayload.PlayerProfile.DisplayName ?? UseProfile.deviceId;
         }
-        SendLeaderBoardScore(UseProfile.Star);
+        GetLeaderBoardScores();
     }
 
     public void OnError(PlayFabError error)
@@ -78,60 +80,14 @@ public class PlayFabManager : MonoBehaviour
     public void OnLeaderBoardScoreUpdated(UpdatePlayerStatisticsResult result)
     {
         Debug.Log("Sent Score " + result);
+        SendEndTime();
     }
 
-    public bool isLoadLeaderBoardDone; 
-
-    public void GetLeaderBoardScores()
+    public void SendEndTime()
     {
-        isLoadLeaderBoardDone = false;
-        var request = new GetLeaderboardRequest
-        {
-            StatisticName = "Rank",
-            StartPosition = 0,
-            MaxResultsCount = 100
-        };
-        PlayFabClientAPI.GetLeaderboard(request, OnLeaderBoardScoreGet, OnError);
-        var tmprequest = new GetLeaderboardRequest
-        {
-            StatisticName = "timeplay",
-            StartPosition = 0,
-            MaxResultsCount = 100
-        };
-        PlayFabClientAPI.GetLeaderboard(tmprequest, OnLeaderBoardTimeGet, OnError);
-    }
+        int secondsSinceEpoch = (int)DateTime.Now.Subtract(new DateTime(2024, 1, 1)).TotalSeconds;
+        Debug.Log("Seconds Since Epoch: " + secondsSinceEpoch);
 
-    public List<RankDataModel> leaderboardScores = new List<RankDataModel>();
-
-    public void OnLeaderBoardScoreGet(GetLeaderboardResult result)
-    {
-        isLoadLeaderBoardDone = true;
-        leaderboardScores = new List<RankDataModel>();
-        foreach (var i in result.Leaderboard)
-        {
-            RankDataModel k = new RankDataModel
-            {
-                score = i.StatValue,
-                userName = i.DisplayName ?? i.PlayFabId,
-                rankID = i.Position + 1
-            };
-            leaderboardScores.Add(k);
-        }
-    }
-    public void OnLeaderBoardTimeGet(GetLeaderboardResult result)
-    {
-        isLoadLeaderBoardDone = true;
-        for (int i = 0; i < result.Leaderboard.Count; i++)
-        {
-            DateTime rankUpdateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds((result.Leaderboard[i].StatValue));
-            Debug.Log("Rank was last updated at: " + rankUpdateTime.ToString());
-            leaderboardScores[i].Time = rankUpdateTime.ToString();
-        }
-    }
-
-    // New method to send playtime to PlayFab
-    public void SendPlayTimeToPlayFab()
-    {
         var request = new UpdatePlayerStatisticsRequest
         {
             Statistics = new List<StatisticUpdate>
@@ -139,15 +95,78 @@ public class PlayFabManager : MonoBehaviour
                 new StatisticUpdate
                 {
                     StatisticName = "timeplay",
-                    Value = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds
+                    Value = secondsSinceEpoch
                 }
             }
         };
-        PlayFabClientAPI.UpdatePlayerStatistics(request, OnPlayTimeSent, OnError);
+
+        PlayFabClientAPI.UpdatePlayerStatistics(request, OnEndTimeSent, OnError);
+        Debug.Log("End Time: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
     }
 
-    public void OnPlayTimeSent(UpdatePlayerStatisticsResult result)
+    public void OnEndTimeSent(UpdatePlayerStatisticsResult result)
     {
-        Debug.Log("Sent PlayTime " + result);
+        Debug.Log("Sent End Time: " + result);
+    }
+
+    public void GetLeaderBoardScores()
+    {
+        isLoadLeaderBoardDone = false;
+
+        var scoreRequest = new GetLeaderboardRequest
+        {
+            StatisticName = "Rank",
+            StartPosition = 0,
+            MaxResultsCount = 100
+        };
+        PlayFabClientAPI.GetLeaderboard(scoreRequest, OnLeaderBoardScoreGet, OnError);
+
+        var timeRequest = new GetLeaderboardRequest
+        {
+            StatisticName = "timeplay",
+            StartPosition = 0,
+            MaxResultsCount = 100
+        };
+        PlayFabClientAPI.GetLeaderboard(timeRequest, OnLeaderBoardTimeGet, OnError);
+    }
+
+    public void OnLeaderBoardScoreGet(GetLeaderboardResult result)
+    {
+        leaderboardScores.Clear();
+
+        foreach (var entry in result.Leaderboard)
+        {
+            RankDataModel rankData = new RankDataModel
+            {
+                score = entry.StatValue,
+                userName = entry.DisplayName ?? entry.PlayFabId,
+                rankID = entry.Position + 1,
+                Time = "N/A"
+            };
+            leaderboardScores.Add(rankData);
+        }
+        isLoadLeaderBoardDone = true;
+    }
+
+    public void OnLeaderBoardTimeGet(GetLeaderboardResult result)
+    {
+        for (int i = 0; i < result.Leaderboard.Count; i++)
+        {
+            if (i < leaderboardScores.Count)
+            {
+                int secondsSinceEpoch = result.Leaderboard[i].StatValue;
+                DateTime rankUpdateTime = new DateTime(2024, 1, 1).AddSeconds(secondsSinceEpoch);
+                foreach (var k in leaderboardScores)
+                {
+                    if (k.userName == result.Leaderboard[i].DisplayName ||
+                        k.userName == result.Leaderboard[i].PlayFabId)
+                    {
+                        k.Time = rankUpdateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                    }
+                }
+                Debug.Log("Rank " + leaderboardScores[i].rankID + " was last updated at: " + leaderboardScores[i].Time);
+            }
+        }
     }
 }
+

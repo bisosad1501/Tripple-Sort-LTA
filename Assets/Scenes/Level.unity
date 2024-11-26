@@ -40069,6 +40069,7 @@ MonoBehaviour:
   comboCount: 0
   timerMax: 0
   currentTime: 1
+  timePlay: 0
   stageProgressTxt: {fileID: 367599016}
   stageProgressBar: {fileID: 1876513805}
   comboLoading: {fileID: 805671365}

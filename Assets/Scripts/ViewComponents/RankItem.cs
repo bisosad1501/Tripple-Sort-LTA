@@ -14,6 +14,7 @@ public class RankItem : MonoBehaviour
     public Text scoreTxt;
     
     public Text timeTxt;
+    
     public Sprite[] medalSpr;
 
     // Start is called before the first frame update

@@ -21,6 +21,8 @@ public class RankDataModel
     public int score;
 
     public String Time;
+    
+    public int EndTime;
 
 
 }

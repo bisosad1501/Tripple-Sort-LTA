@@ -238,7 +238,7 @@ public class GameManager : SingletonGame<GameManager>
         inGameStar = 0;
         uiManager.homeView.InitView();
         uiManager.homeView.ShowView();
-        uiManager.storeView.InitView();
+       // uiManager.storeView.InitView();
     }
     
     public void NextLevel()

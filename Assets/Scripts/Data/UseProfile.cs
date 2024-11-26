@@ -175,6 +175,8 @@ public class UseProfile : MonoBehaviour
             PlayerPrefs.Save();
         }
     }
+    
+    
     public static int Heart
     {
         get
